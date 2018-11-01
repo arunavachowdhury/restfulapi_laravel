@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         \App\User::truncate();
         \App\Category::truncate();
         \App\Product::truncate();
+        \App\Transaction::truncate();
 
         factory(\App\User::class,100)->create();
         factory(\App\Category::class,10)->create();
@@ -27,6 +28,7 @@ class DatabaseSeeder extends Seeder
                 $product->categories()->attach($categories);
             }
         );
+        factory(\App\Transaction::class,10)->create();
 
     }
 }

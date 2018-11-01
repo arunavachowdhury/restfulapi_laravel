@@ -10,7 +10,7 @@ class Seller extends User
     use SoftDeletes;
     
     protected $dates = ['deleted_at'];
-    public function product(){
+    public function products(){
         return $this->hasMany(Product::class);
     }
 }

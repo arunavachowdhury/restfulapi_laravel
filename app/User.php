@@ -11,6 +11,8 @@ class User extends Authenticatable
 {
     use Notifiable,SoftDeletes;
 
+    protected $table = 'users';
+
     protected $dates = ['deleted_at'];
 
     const VARIFIED_USER = '1';
@@ -39,7 +41,7 @@ class User extends Authenticatable
     }
 
     public function setEmailAttribute($email){
-        $this->attributes['email'] = strtolower($name);
+        $this->attributes['email'] = strtolower($email);
     }
 
 
