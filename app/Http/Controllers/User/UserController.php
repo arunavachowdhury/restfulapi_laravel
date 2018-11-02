@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
 use App\Http\Controllers\ApiController;
+use Illuminate\Support\Facades\Mail;
+
 
 class UserController extends ApiController
 {
@@ -91,13 +93,36 @@ class UserController extends ApiController
      */
     public function update(Request $request, $id)
     {
+        $user = User::find($id);
         $validatedData = [
-            'name'=> 'required',
-            'email'=> 'required|unique:users',
-            'password'=> 'required|min:6|confirmed' 
+            'email'=> 'unique:users,email,' . $user->id,
+            'password'=> 'min:6|confirmed', 
+            'admin' => 'in:' . User::REGULER_USER . ', ' . User::ADMIN_USER
         ];
         $this->validate($request, $validatedData);
-        
+
+        if($request->has('name')){
+            $user->name = $request->name;
+        }
+        if($request->has('email') && $user->email != $request->id){
+            $user->email = $request->email;
+            $user->varified = User::UNVARIFIED_USER;
+            $user->varification_token = User::generateVerificationToken();
+        }
+        if($request->has('password')){
+            $user->password = bcrypt($request->password);
+        }
+        if($request->has('admin')){
+            if(!$user->isVarified()){
+               return $this->Error('User must be varified to change admin field',409);
+            }
+            $user->admin = $request->admin;
+        }
+        if(!$user->isDirty()) {
+            return $this->Error('You need to specify a different value to update', 422);
+        }
+        $user->save();
+        return $this->ShowOne($user);
     }
 
     /**
