@@ -18,7 +18,16 @@ use Illuminate\Http\Request;
 // });
     Route::resource('users', 'User\UserController');
     Route::resource('categories', 'Category\CategoryController');
-    Route::resource('products', 'Product\ProductController');
-    Route::resource('buyers', 'Buyer\BuyerController');
+    Route::resource('products', 'Product\ProductController',['only'=> ['index','show']]);
+    Route::resource('products.categories', 'Product\ProductCategoryController', ['only'=> ['index','update','delete']]);
+
+    Route::resource('buyers', 'Buyer\BuyerController', ['only'=> ['index','show']]);
+    Route::resource('buyers.transactions', 'Buyer\BuyerTransactionController', ['only' =>['index']]);
+    Route::resource('buyers.products', 'Buyer\BuyerProductController', ['only'=> ['index']]);
+    Route::resource('buyers.seller', 'Buyer\BuyerSellerController', ['only'=> ['index']]);
+    Route::resource('buyers.categories', 'Buyer\BuyerCategoryController', ['only'=> ['index']]);
+
+
+
     Route::resource('seller', 'Seller\SellerController');
     Route::resource('transaction', 'Transaction\TransactionController');

@@ -86,6 +86,7 @@ class Handler extends ExceptionHandler
                 return $this->Error('Cannot remove this resource parmanently. It is retlated with any other resource', 409);
             }
         }
+        return $this->Error('Try again later',500);
     }
 
     

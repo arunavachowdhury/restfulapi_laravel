@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Transaction;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
+use App\Transaction;
 
-class TransactionController extends Controller
+class TransactionController extends ApiController
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +16,8 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        //
+        $transactions = Transaction::all();
+        return $this->ShowAll($transactions);
     }
 
     /**
@@ -46,7 +49,8 @@ class TransactionController extends Controller
      */
     public function show($id)
     {
-        //
+        $transactions = Transaction::findOrFail($id);
+        return $this->ShowOne($transactions);
     }
 
     /**
