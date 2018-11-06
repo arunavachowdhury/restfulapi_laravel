@@ -4,17 +4,19 @@ namespace App\Http\Controllers\Category;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
-class CategoryController extends Controller
+use App\Http\Controllers\ApiController;
+use App\Category;
+class CategoryController extends ApiController
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Category $category)
     {
-        //
+        $category = Category::all();
+        return $this->ShowAll($category);
     }
 
     /**
@@ -35,7 +37,14 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $ValidateData = [
+            'name' => 'required',
+            'description' => 'required'
+        ];
+        $this->validate($request,$ValidateData);
+
+        $newCategory = Category::create($request->all());
+        return $this->ShowOne($newCategory);
     }
 
     /**
@@ -46,7 +55,8 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        //
+        $category = Category::find($id);
+        return $this->ShowOne($category);
     }
 
     /**
@@ -67,9 +77,21 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $category)
     {
-        //
+        if($request->has('name'))
+        {
+            $category->name = $request->name;
+        }
+        if($request->has('description'))
+        {
+            $category->description = $request->description;
+        }
+        if(!$category->isDirty()){
+            return $this->Error('You need to specify diffrent value',422);
+        }
+        $category->save();
+        return $this->ShowOne($category);
     }
 
     /**
