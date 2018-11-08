@@ -11,7 +11,12 @@ class BuyerProductController extends ApiController
 {
     public function index(Buyer $buyer)
     {
-        $product = $buyer->transactions()->with('product')->get()->pluck('product')->unique('id')->values();
+        $product = $buyer->transactions()
+        ->with('product')
+        ->get()
+        ->pluck('product')
+        ->unique('id')
+        ->values();
         return $this->ShowAll($product);
     }
 }
