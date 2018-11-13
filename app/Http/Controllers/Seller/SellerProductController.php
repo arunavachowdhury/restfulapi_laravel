@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Seller;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Http\Controllers\ApiController;
 use App\Seller;
 use App\Product;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Foundation\Testing\HttpException;
 
@@ -45,10 +45,8 @@ class SellerProductController extends ApiController
             'image' => 'image' 
         ];
         $this->validate($request,$ValidateData);
-
         $this->checkSeller($seller, $product);
-
-        if($request->has('name'))
+         if($request->has('name'))
         {
             $product->name = $request->name;
         }
@@ -58,7 +56,7 @@ class SellerProductController extends ApiController
         }
         if($request->has('quantity'))
         {
-            $product->quantity += $request->quantity;
+            $product->quantity = $request->quantity;
         }
         if($request->has('status'))
         {

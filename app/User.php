@@ -32,6 +32,12 @@ class User extends Authenticatable
         'name', 'email', 'password','varified','varification_token','admin'
     ];
 
+    protected $hidden = [
+        'password',
+        'remember_token',
+        'varification_token'
+    ];
+
     public function setNameAttribute($name){
         $this->attributes['name'] = strtolower($name);
     }
@@ -51,9 +57,6 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
 
 
 

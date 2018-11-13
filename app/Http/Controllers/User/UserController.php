@@ -137,4 +137,14 @@ class UserController extends ApiController
         $user->delete();
         return $this->ShowOne($user); 
     }
+
+    public function verify($token)
+    {
+        $user = User::where('varification_token', $token)->firstOrFail();
+        $user->varified = User::VARIFIED_USER;
+        $user->varification_token = null;
+
+        $user->save();
+        return $this->ShowMessage('This account has been verified successfully', 200);
+    }
 }
