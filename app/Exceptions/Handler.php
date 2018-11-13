@@ -62,7 +62,7 @@ class Handler extends ExceptionHandler
         if($exception instanceof ValidationException){
             return $this->convertValidationExceptionToResponse($exception,$request);
         }
-        elseif($exception instanceof ModelNotFound){
+        elseif($exception instanceof ModelNotFoundException){
             return $this->Error('Does not exists Model with the specified identifier',404);
         }
         elseif($exception instanceof AuthenticationException){

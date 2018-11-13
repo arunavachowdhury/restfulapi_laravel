@@ -15,7 +15,7 @@ class BuyerController extends ApiController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Buyer $buyer)
     {
         $buyer = Buyer::has('transactions')->get();
         return $this->ShowAll($buyer);
@@ -48,9 +48,9 @@ class BuyerController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Buyer $buyer)
     {
-        $buyer = Buyer::has('transactions')->findOrFail($id);
+        // $buyer = Buyer::has('transactions')->findOrFail($id);
         return $this->ShowOne($buyer);
     }
 

@@ -44,4 +44,7 @@ use Illuminate\Http\Request;
     Route::resource('seller.categories', 'Seller\SellerCategoryController', ['only'=> ['index']]);
 
     Route::resource('transactions', 'Transaction\TransactionController',['only' => ['index','show']]);
-    // Route::resource('transactions.')
+    Route::resource('transactions.buyer','Transaction\TransactionBuyerController',['only'=> ['index']]);
+    Route::resource('transactions.seller', 'Transaction\TransactionSellerController', ['only'=> ['index']]);
+
+    Route::name('verify')->get('users/verify/{token}', 'User\UserController@verify');

@@ -18,4 +18,9 @@ Trait ApiResponser
         return response()->json(['error'=>$message, 'code'=>$code]);
     }
 
+    protected function ShowMessage($message, $code = 200)
+    {
+        return response()->json(['data' => $message, 'code'=> $code]);
+    }
+
 }
