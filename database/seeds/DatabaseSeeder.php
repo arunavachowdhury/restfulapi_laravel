@@ -1,11 +1,7 @@
-<?php
+\App\<?php
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use App\Category;
-use App\Product;
-use App\Transaction;
-use App\User;
 
 class DatabaseSeeder extends Seeder
 {
@@ -19,15 +15,15 @@ class DatabaseSeeder extends Seeder
         // $this->call(UsersTableSeeder::class);
         DB::statement('SET FOREIGN_KEY_CHECKS = 0');
         
-        User::truncate();
-        Category::truncate();
-        Product::truncate();
-        Transaction::truncate();
+        \App\User::truncate();
+        \App\Category::truncate();
+        \App\Product::truncate();
+        \App\Transaction::truncate();
 
-        User::flashEventListeners();
-        Category::flashEventListeners();
-        Product::flashEventListeners();
-        Transaction::flashEventListeners();
+        \App\User::flushEventListeners();
+        \App\Category::flushEventListeners();
+        \App\Product::flushEventListeners();
+        \App\Transaction::flushEventListeners();
 
         factory(\App\User::class,100)->create();
         factory(\App\Category::class,10)->create();
