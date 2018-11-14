@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\UserCreated;
 
 
 class UserController extends ApiController
@@ -146,5 +147,17 @@ class UserController extends ApiController
 
         $user->save();
         return $this->ShowMessage('This account has been verified successfully', 200);
+    }
+
+    public function resend(User $user)
+    {
+        if($user->isVarified())
+        {
+            return $this->Error('User already varified',409);
+        }
+        retry(5, function () use ($user){
+            Mail::to($user)->send(new UserCreated($user));
+        }, 100);
+        return $this->ShowMessage('The verification email has been resend');
     }
 }

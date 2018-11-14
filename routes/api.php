@@ -48,3 +48,4 @@ use Illuminate\Http\Request;
     Route::resource('transactions.seller', 'Transaction\TransactionSellerController', ['only'=> ['index']]);
 
     Route::name('verify')->get('users/verify/{token}', 'User\UserController@verify');
+    Route::name('resend')->get('users/{user}/resend', 'User\UserController@resend');
