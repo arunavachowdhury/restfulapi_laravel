@@ -4,11 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
+use App\Transformers\ProductTransformer;
 
 class Product extends Model
 {
     use SoftDeletes;
 
+    public $transformer = ProductTransformer::class;
     protected $dates = ['deleted_at'];
 
     const AVALIABLE_PRODUCT = 'avaliable';

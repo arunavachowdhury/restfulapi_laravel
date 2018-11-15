@@ -6,10 +6,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Transformers\UserTransformer;
 
 class User extends Authenticatable
 {
     use Notifiable,SoftDeletes;
+
+    public $transformer = UserTransformer::class;
 
     protected $table = 'users';
 
