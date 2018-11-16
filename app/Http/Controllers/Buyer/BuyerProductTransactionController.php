@@ -10,11 +10,18 @@ use App\Transaction;
 use App\Buyer;
 use App\User;
 use Illuminate\Support\Facades\DB;
+use App\Transformers\TransactionTransformer;
 
 
 class BuyerProductTransactionController extends ApiController
 
 {
+    public function __construct()
+    {
+        parent:: __construct();
+        $this->middleware('transform.input:' . TransactionTransformer::class)->only('store');
+    }
+
     public function store(Request $request, User $buyer, Product $product){
         $ValidateData = [
             'quantity' => 'required|integer|min:1'
