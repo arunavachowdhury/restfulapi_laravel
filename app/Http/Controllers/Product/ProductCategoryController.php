@@ -10,6 +10,11 @@ use App\Product;
 
 class ProductCategoryController extends ApiController
 {
+    public function __construct()
+    {
+        $this->middleware('client.credentials')->only('index');
+    }
+    
     public function index(Product $product)
     {
         $categories = $product->categories;

@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Exception\MethodNotAllowedException;
+use Illuminate\Session\TokenMismatchException;
 
 
 
@@ -86,6 +87,11 @@ class Handler extends ExceptionHandler
                 return $this->Error('Cannot remove this resource parmanently. It is retlated with any other resource', 409);
             }
         }
+
+        elseif($exception instanceof TokenMismatchException){
+            return redirect()->back()->withInput($request->input());
+        }
+
         return $this->Error('Try again later',500);
     }
 
@@ -93,7 +99,20 @@ class Handler extends ExceptionHandler
     
     protected function convertValidationExceptionToResponse(ValidationException $e, $request)
     {
-        $errors = $e->errors();
+        $errors = $e->validator->errors()->getMessages();
+
+        if ($this->isFrontend($request)) {
+            return $request->ajax() ? response()->json($errors, 422) : redirect()
+                    ->back()
+                    ->withInput($request->input())
+                    ->withErrors($errors);
+        }
+
         return $this->Error($errors, 422);
+    }
+
+    private function isFrontend($request)
+    {
+        return $request->acceptsHtml() && collect($request->route()->middleware())->contains('web');
     }
 }
