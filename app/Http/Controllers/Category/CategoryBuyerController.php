@@ -9,6 +9,12 @@ use App\Category;
 
 class CategoryBuyerController extends ApiController
 {
+    
+    public function __construct()
+    {
+        parent::__construct();
+    }
+    
     public function index(Category $category)
     {
         $buyer =$category->products()

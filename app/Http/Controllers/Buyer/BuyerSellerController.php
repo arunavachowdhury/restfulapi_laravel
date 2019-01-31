@@ -10,6 +10,11 @@ use App\Buyer;
 
 class BuyerSellerController extends ApiController
 {
+    public function __construct()
+    {
+        parent::__construct();
+    }
+    
     public function index(Buyer $buyer)
     {
         $seller = $buyer->transactions()->with('product.seller')->get()->pluck('product.seller');

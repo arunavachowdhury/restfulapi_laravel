@@ -9,6 +9,12 @@ use App\Product;
 
 class ProductBuyerController extends ApiController
 {
+    
+    public function __construct()
+    {
+        parent::__construct();
+    }
+    
     public function index(Product $product)
     {
         $buyer = $product->transactions()
